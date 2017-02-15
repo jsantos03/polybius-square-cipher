@@ -1,0 +1,89 @@
+# coding=utf-8
+import sys, getopt
+from string import ascii_lowercase
+from collections import Counter
+import numpy as np
+
+##----TODO-------
+# quite la 'k' del diccionario suponiendo que esta aparece como 'c'
+#se ejecuta asi por ahora : python polybius-square-cipher.py -d -i mensaje.txt -o nada
+#
+#encriptar pasando por parámetro el keyword
+#
+##--------------
+
+inputfile = ''
+outputfile = ''
+metodo = ''
+#keyword = ''
+
+def decrypt(ifile,ofile):
+    diccionario = np.arange(25).reshape((5, 5))
+    diccionario[0][0] = '97'
+    diccionario[0][1] = '98'
+    diccionario[0][2] = '99'
+    diccionario[0][3] = '100'
+    diccionario[0][4] = '101'
+    diccionario[1][0] = '102'
+    diccionario[1][1] = '103'
+    diccionario[1][2] = '104'
+    diccionario[1][3] = '105'
+    diccionario[1][4] = '106'
+    diccionario[2][0] = '108'
+    diccionario[2][1] = '109'
+    diccionario[2][2] = '110'
+    diccionario[2][3] = '111'
+    diccionario[2][4] = '112'
+    diccionario[3][0] = '113'
+    diccionario[3][1] = '114'
+    diccionario[3][2] = '115'
+    diccionario[3][3] = '116'
+    diccionario[3][4] = '117'
+    diccionario[4][0] = '118'
+    diccionario[4][1] = '119'
+    diccionario[4][2] = '120'
+    diccionario[4][3] = '121'
+    diccionario[4][4] = '122'
+    
+    with open(ifile) as mensaje:
+        for line in mensaje:
+            key = 0
+            i = 0
+            int1 = 0
+            int2 = 0
+            for c in line:
+                i = i + 1
+                if (i%2) == 0:
+                    int2 = c
+                    print int1,
+                    print int2,
+                    print chr(diccionario[(ord(int1) - 49)][(ord(int2) - 49)])
+                else:
+                    int1 = c
+
+def main(argv):
+    
+    try:
+        opts, args = getopt.getopt(argv, "hi:o:cd", ["keyword=","ifile=","ofile="])
+    except getopt.GetoptError:
+        print 'polyalphabetic-cipher.py -<metodo> -k <keyword> -i <inputfile> -o <outputfile OR "none">'
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print 'polyalphabet-cipher.py -<metodo> -k <keyword> -i <inputfile> -o <outputfile OR "none">'
+            sys.exit()
+        elif opt == "-c":
+            metodo = 'crypt'
+        elif opt == "-d":
+            metodo = 'decrypt'
+        elif opt in ("-w", "--keyword"):
+            keyword = arg
+        elif opt in ("-i", "--ifile"):
+            inputfile = arg
+        elif opt in ("-o", "--ofile"):
+            outputfile = arg
+    if metodo == 'decrypt':
+        decrypt(inputfile,outputfile)
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
