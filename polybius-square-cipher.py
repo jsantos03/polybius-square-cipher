@@ -6,7 +6,7 @@ import numpy as np
 
 ##----TODO-------
 #
-#
+#se ejecuta asi por ahora : python polybius-square-cipher.py -d -i mensaje.txt -o nada
 #
 #encriptar pasando por parámetro el keyword
 #
